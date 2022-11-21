@@ -136,7 +136,9 @@ namespace TdExample
                 if (!_needQuit)
                 {
                     _client = CreateTdClient(); // recreate _client after previous has closed
-                } else {
+                }
+                else
+                {
                     _canQuit = true;
                 }
             }
@@ -170,6 +172,12 @@ namespace TdExample
             {
                 switch (commands[0])
                 {
+                    case "cpc":
+                        _client.Send(new TdApi.CreatePrivateChat(GetChatId(commands[1]), false), _defaultHandler);
+                        break;
+                    case "spc":
+                        _client.Send(new TdApi.SearchPublicChat(commands[1]), _defaultHandler);
+                        break;
                     case "gc":
                         _client.Send(new TdApi.GetChat(GetChatId(commands[1])), _defaultHandler);
                         break;
@@ -247,7 +255,8 @@ namespace TdExample
                     GetCommand();
                 }
             }
-            while (!_canQuit) {
+            while (!_canQuit)
+            {
                 Thread.Sleep(1);
             }
         }
