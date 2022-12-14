@@ -32,6 +32,8 @@ namespace TdExample
         private static readonly string _commandsLine = "Enter command (gc <chatId> - GetChat, me - GetMe, sm <chatId> <message> - SendMessage, lo - LogOut, r - Restart, q - Quit): ";
         private static volatile string _currentPrompt = null;
 
+        private static Spammer _spammer = null;
+
         private static Td.Client CreateTdClient()
         {
             return Td.Client.Create(new UpdateHandler());
@@ -172,6 +174,9 @@ namespace TdExample
             {
                 switch (commands[0])
                 {
+                    case "spam":
+                        _spammer.Spam(commands[1]);
+                        break;
                     case "cpc":
                         _client.Send(new TdApi.CreatePrivateChat(GetChatId(commands[1]), false), _defaultHandler);
                         break;
@@ -238,6 +243,7 @@ namespace TdExample
 
             // create Td.Client
             _client = CreateTdClient();
+            _spammer = new Spammer(_client);
 
             // test Client.Execute
             _defaultHandler.OnResult(Td.Client.Execute(new TdApi.GetTextEntities("@telegram /test_command https://telegram.org telegram.me @gif @test")));
