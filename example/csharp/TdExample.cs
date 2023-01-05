@@ -177,12 +177,6 @@ namespace TdExample
                     case "spam":
                         _spammer.Spam(commands[1]);
                         break;
-                    case "cpc":
-                        _client.Send(new TdApi.CreatePrivateChat(GetChatId(commands[1]), false), _defaultHandler);
-                        break;
-                    case "spc":
-                        _client.Send(new TdApi.SearchPublicChat(commands[1]), _defaultHandler);
-                        break;
                     case "gc":
                         _client.Send(new TdApi.GetChat(GetChatId(commands[1])), _defaultHandler);
                         break;
@@ -230,8 +224,13 @@ namespace TdExample
         static void Main()
         {
             // disable TDLib log
-            Td.Client.Execute(new TdApi.SetLogVerbosityLevel(0));
-            if (Td.Client.Execute(new TdApi.SetLogStream(new TdApi.LogStreamFile("tdlib.log", 1 << 27, false))) is TdApi.Error)
+            //Td.Client.Execute(new TdApi.SetLogVerbosityLevel(0));
+
+            // set TdLib log
+            //DateTime now = DateTime.Now;
+            //string filename = "tdlib_" + now.Year + now.Month + now.Day + now.Hour + now.Minute + now.Second + ".log";
+            string filename = "tdlib.log";
+            if (Td.Client.Execute(new TdApi.SetLogStream(new TdApi.LogStreamFile(filename, 1 << 27, false))) is TdApi.Error)
             {
                 throw new System.IO.IOException("Write access to the current directory is required");
             }
@@ -246,7 +245,7 @@ namespace TdExample
             _spammer = new Spammer(_client);
 
             // test Client.Execute
-            _defaultHandler.OnResult(Td.Client.Execute(new TdApi.GetTextEntities("@telegram /test_command https://telegram.org telegram.me @gif @test")));
+            //_defaultHandler.OnResult(Td.Client.Execute(new TdApi.GetTextEntities("@telegram /test_command https://telegram.org telegram.me @gif @test")));
 
             // main loop
             while (!_needQuit)
