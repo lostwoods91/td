@@ -71,6 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Raspa.cs" />
     <Compile Include="Spammer.cs" />
     <Compile Include="TdExample.cs" />
   </ItemGroup>

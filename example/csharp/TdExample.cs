@@ -33,6 +33,7 @@ namespace TdExample
         private static volatile string _currentPrompt = null;
 
         private static Spammer _spammer = null;
+        private static Raspa _raspa = null;
 
         private static Td.Client CreateTdClient()
         {
@@ -177,6 +178,9 @@ namespace TdExample
                     case "spam":
                         _spammer.Spam(commands[1]);
                         break;
+                    case "raspa":
+                        _raspa.Test();
+                        break;
                     case "gc":
                         _client.Send(new TdApi.GetChat(GetChatId(commands[1])), _defaultHandler);
                         break;
@@ -243,6 +247,7 @@ namespace TdExample
             // create Td.Client
             _client = CreateTdClient();
             _spammer = new Spammer(_client);
+            _raspa = new Raspa(_client);
 
             // test Client.Execute
             //_defaultHandler.OnResult(Td.Client.Execute(new TdApi.GetTextEntities("@telegram /test_command https://telegram.org telegram.me @gif @test")));
